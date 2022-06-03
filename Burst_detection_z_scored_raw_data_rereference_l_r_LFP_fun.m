@@ -18,13 +18,13 @@
 % clear -except isubject
 % isubject = 1;
 warning('off','all')
-%% Define the important paths
+%% Define how these detected bursts should be named
 thresh_prc = 75; %burst detection threshold
 detection_identifier = 'first_z_bipolar';
 final_file_name = [detection_identifier '_' mat2str(thresh_prc)]; % create a string to later on identify your detected burst if you use i.e. different thresholds
 %% Define the important paths
 Med_state = 'OFF';
-path_brainstorm_project = ['../brainstorm_db/STN_COR_' Med_state '/'];
+path_brainstorm_project = ['.../brainstorm_db/STN_COR_' Med_state '/'];
 path_brainstorm_code = '.../brainstorm3/';
 addpath(genpath(path_brainstorm_code));
 OutputPath='Where to store the bursts'; % in this folder should be a folder for each subject with the subject ID as folder name
@@ -268,7 +268,7 @@ for irun=1:length(subject{isubject,2})
                     end
                 end
             end
-            % safe pre-processed data for later use
+            % save pre-processed data for later use
             DC_Data_OFF.(subject_ID{isubject}).(Runs{irun}).(freqband_name{iFreq}).(Hemispheres{iLFP}) = DC_data;
             % determine Trshold based on OFF and ON data
             if isempty(Subj_Thresholds(iFreq,isubject,iLFP)) || Subj_Thresholds(iFreq,isubject,iLFP) == 0
@@ -506,7 +506,7 @@ for irun=1:length(subject{isubject,2})
                     end
                 end
             end
-            % safe pre-processed data for later use
+            % save pre-processed data for later use
             DC_Data_ON.(subject_ID{isubject}).(Runs{irun}).(freqband_name{iFreq}).(Hemispheres{iLFP}) = DC_data;
             % determine Trshold based on OFF and ON data
             if isempty(Subj_Thresholds(iFreq,isubject,iLFP)) || Subj_Thresholds(iFreq,isubject,iLFP) == 0
@@ -566,7 +566,7 @@ for irun=1:length(subject{isubject,2})
     load([path_brainstorm_project 'data/' subject{isubject,1} '/' subject{isubject,2}{irun} '/data_block001.mat'], 'Time')
     for iFreq = 1 : size(freqband_name,2)
         for iLFP = 1 : 2
-        % create a Data struct to later safe the timepoinrts of the burst
+        % create a Data struct to later save the timepoinrts of the burst
         % could be also used directly in brainstorm
         clear DataMat
         DataMat.F.events.label = [];
@@ -576,7 +576,7 @@ for irun=1:length(subject{isubject,2})
         DataMat.F.events.times = [];
         DataMat.F.events.reactTimes = [];
         DataMat.F.events.select = [];
-        % safe the burst amplitude
+        % save the burst amplitude
         Amplitude_cell = {};               
             %define the frequency band
             freqband = [peak_freq(iLFP,isubject)-3 peak_freq(iLFP,isubject)+3];
@@ -622,7 +622,7 @@ for irun=1:length(subject{isubject,2})
                 [peak_beta_value(end+1),peak_beta(end+1)] = max(DC_data(start_beta(n):end_beta(n))); 
                 peak_beta(n) = peak_beta(n)+start_beta(n);
             end
-            % safe the beta time points in a struct
+            % save the beta time points in a struct
             for n = 1 : size(time_point,1)
                  DataMat.F.events(end+1).label = ['Morlet_' num2str(freqband(iFreq,1)) '_' num2str(freqband(iFreq,2)) '_' Hemispheres{iLFP} '_' time_point{n}];
                  DataMat.F.events(end).color = [0 0 1];
@@ -689,7 +689,7 @@ for irun=1:length(subject{isubject,2})
     load([path_brainstorm_project 'data/' subject{isubject,1} '/' subject{isubject,2}{irun} '/data_block001.mat'], 'Time')
     for iFreq = 1 : size(freqband_name,2)
         for iLFP = 1 : 2
-            % create a Data struct to later safe the timepoinrts of the burst
+            % create a Data struct to later save the timepoinrts of the burst
             % could be also used directly in brainstorm
             clear DataMat
             DataMat.F.events.label = [];
@@ -699,7 +699,7 @@ for irun=1:length(subject{isubject,2})
             DataMat.F.events.times = [];
             DataMat.F.events.reactTimes = [];
             DataMat.F.events.select = [];
-            % safe the burst amplitude
+            % save the burst amplitude
             Amplitude_cell = {};   
             %define the frequency band
             freqband = [peak_freq(iLFP,isubject)-3 peak_freq(iLFP,isubject)+3];
@@ -745,7 +745,7 @@ for irun=1:length(subject{isubject,2})
                 [peak_beta_value(end+1),peak_beta(end+1)] = max(DC_data(start_beta(n):end_beta(n))); 
                 peak_beta(n) = peak_beta(n)+start_beta(n);
             end
-            % safe the beta time points in a struct
+            % save the beta time points in a struct
             for n = 1 : size(time_point,1)
                  DataMat.F.events(end+1).label = ['Morlet_' num2str(freqband(iFreq,1)) '_' num2str(freqband(iFreq,2)) '_' Hemispheres{iLFP} '_' time_point{n}];
                  DataMat.F.events(end).color = [0 0 1];
